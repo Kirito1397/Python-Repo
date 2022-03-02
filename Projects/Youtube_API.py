@@ -3,7 +3,7 @@
 from googleapiclient import discovery
 import json
 
-API_KEY = "AIzaSyAjTIveFo_fc-V3J1fBRVOH0N9uPFdCTn8"
+API_KEY = "<PROVIDE THE API KEY>"
 API_SERVICE_NAME = "youtube"
 API_VERSION = "v3"
 youtube = discovery.build(API_SERVICE_NAME, API_VERSION,developerKey=API_KEY)
