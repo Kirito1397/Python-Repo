@@ -1,0 +1,38 @@
+'''
+Inheritance is a way to form new classes using classes that have already been defined.
+The newly formed classes are called derived classes, the classes that we derive from 
+are called base classes. Important benefits of inheritance are code reuse and reduction
+of complexity of a program. 
+The derived classes (descendants) override or extend the functionality of base classes (ancestors).
+'''
+
+class Animal():
+    def __init__(self):
+        print("Animal Created")
+
+    # The function from Base class can be overwritten/modified
+    def whoami(self):
+        print("Animal")
+
+    def eat(self):
+        print("Eating (Function of Base class)")
+
+class Dog(Animal):
+    def __init__(self):
+        Animal.__init__(self)
+        print("Dog Created")
+    
+    def whoami(self):
+        print("Dog")
+
+    # Derived class extends the functionality of the base class, by defining a new bark() method.
+    def bark(self):
+        print("Woof")
+
+if __name__ == "__main__":
+
+    mydog = Dog()
+
+    mydog.whoami()
+    mydog.eat()
+    mydog.bark()
