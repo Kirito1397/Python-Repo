@@ -1,8 +1,7 @@
 def seed_generation(content):
-    START_DEVICE,START_DEVICE_INTERFACE,END_DEVICE,END_DEVICE_INTERFACE,CONNECTOR_TYPE = content
-    
+
     # Below function fetches the Device Type of a Device.
-    def  identify_device_type(device):
+    def identify_device_type(device):
         device_types = {'ier': 'InternetEdgeRouter',
                         'eza': 'EdgeZoneAggregator',
                         'ibr': 'InternetBackboneRouter',
@@ -10,23 +9,56 @@ def seed_generation(content):
                         'rwa': 'RegionalAggregatorRouter',
                         'car': 'CoreAggregatorRouter',
                         'ear': 'EdgeAggregatorRouter',
+                        'ter': 'TransitEdgeRouter',
                         'owr': 'OneWanRouter'}
-        return  device_types.get(device[:3].lower())
+        return device_types.get(device[:3].lower())
 
-    # Provides with a Single wiring template per link
-    wiring_template = (f"""
-               <Wiring>
-                   <Start DeviceType="{identify_device_type(START_DEVICE)}" StartDevice="{START_DEVICE}" ItfNames="{START_DEVICE_INTERFACE}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
-                   <End DeviceType="{identify_device_type(END_DEVICE)}" EndDevice="{END_DEVICE}" ItfNames="{END_DEVICE_INTERFACE}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
-               </Wiring>""")
-    return wiring_template
+    #Gets the number of items provided as input per link
+    items = len(content)
+
+    if items < 6:
+        START_DEVICE, START_DEVICE_INTERFACE, END_DEVICE, END_DEVICE_INTERFACE, CONNECTOR_TYPE = content
+
+        # Provides with a Single wiring template per link
+        wiring_template = (f"""\
+                   <Wiring>
+                       <Start DeviceType="{identify_device_type(START_DEVICE)}" StartDevice="{START_DEVICE}" ItfNames="{START_DEVICE_INTERFACE}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
+                       <End DeviceType="{identify_device_type(END_DEVICE)}" EndDevice="{END_DEVICE}" ItfNames="{END_DEVICE_INTERFACE}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
+                       <LinkCount="1" LinkState="Production" />
+                   </Wiring>""")
+        return wiring_template
+
+    elif items == 6:
+        START_DEVICE, START_DEVICE_INTERFACE, END_DEVICE, END_DEVICE_INTERFACE, CONNECTOR_TYPE, SRLG_ID = content
+
+        # Provides with a Single wiring template per link
+        wiring_template = (f"""\
+                   <Wiring>
+                       <Start DeviceType="{identify_device_type(START_DEVICE)}" StartDevice="{START_DEVICE}" ItfNames="{START_DEVICE_INTERFACE}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
+                       <End DeviceType="{identify_device_type(END_DEVICE)}" EndDevice="{END_DEVICE}" ItfNames="{END_DEVICE_INTERFACE}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
+                       <LinkCount="1" LinkState="Production" SrlgId="{SRLG_ID}" />
+                   </Wiring>""")
+        return wiring_template
+
+    elif items > 7:
+        START_DEVICE, START_DEVICE_INTERFACE, END_DEVICE, END_DEVICE_INTERFACE, CONNECTOR_TYPE, SRLG_ID, START_IPV4, START_IPV46, END_IPV4, END_IPV6 = content
+
+        # Provides with a Single wiring template per link
+        wiring_template = (f"""
+                   <Wiring>
+                       <Start DeviceType="{identify_device_type(START_DEVICE)}" StartDevice="{START_DEVICE}" ItfNames="{START_DEVICE_INTERFACE}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
+                       <End DeviceType="{identify_device_type(END_DEVICE)}" EndDevice="{END_DEVICE}" ItfNames="{END_DEVICE_INTERFACE}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
+                       <LinkCount="1" LinkState="Production" SrlgId="{SRLG_ID}" />
+                   </Wiring>""")
+        return wiring_template
+
 
 if __name__ == "__main__":
     ndt_links = []
     print("Kindly enter the link details: \n")
     # Get all the links as input
     while True:
-        per_line_input = list(map(str,input().split()))
+        per_line_input = list(map(str, input().split()))
         if per_line_input != []:
             ndt_links.append(per_line_input)
         else:
@@ -38,8 +70,13 @@ if __name__ == "__main__":
 
     # Run Loop to create and join wriring templates
     for link in ndt_links:
-        seed_file = "".join((seed_file,seed_generation(link)))
+        seed_file = "".join((seed_file, seed_generation(link)))
     print(seed_file)
+
+    # FILE_PATH = "C:/Users/Kirito/Desktop/Seed.txt"
+    # with open(FILE_PATH,'w') as file:
+    #     file.writelines(seed_file)
+
 
 
 '''
