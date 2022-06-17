@@ -17,9 +17,9 @@ def main():
         sys.exit(1)
     _synchronous_check(urls)
 
-#  _get_websites_urls() defines a conditional that checks if the user has provided a URLs file. 
+# _get_websites_urls() defines a condition, that checks if the user has provided a URLs file.
 # If so, then the if block augments the list of target URLs resulting from
-#  calling _read_urls_from_file() with the file provided in the user_args.input_file 
+# calling _read_urls_from_file() with the file provided in the user_args.input_file
 # command-line argument.
 
 def _get_websites_urls(user_args):

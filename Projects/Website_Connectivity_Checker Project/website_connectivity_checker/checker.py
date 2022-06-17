@@ -1,6 +1,5 @@
 from distutils.log import error
 from http.client import HTTPConnection
-from typing import final
 from urllib.parse import urlparse
 
 def site_is_online(url, timeout=2):

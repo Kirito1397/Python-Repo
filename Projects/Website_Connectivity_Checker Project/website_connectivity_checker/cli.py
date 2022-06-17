@@ -1,5 +1,4 @@
 import argparse
-from msilib import type_string
 
 def read_user_cli_args():
     """ Handle the CLI arguments and options"""
@@ -35,8 +34,6 @@ def display_check_result(result, url, error=""):
         print("'Online' 👍")
     else:
         print(f'"Offline?" 👎 \n  Error: "{error}"')
-
-
 
 """" 
 metavar : sets a name for the argument in usage or help messages.
