@@ -17,37 +17,37 @@ def seed_generation(content):
     items = len(content)
 
     if items < 6:
-        START_DEVICE, START_DEVICE_INTERFACE, END_DEVICE, END_DEVICE_INTERFACE, CONNECTOR_TYPE = content
+        START_DEVICE, START_PORT, END_DEVICE, END_PORT, CONNECTOR_TYPE = content
 
         # Provides with a Single wiring template per link
         wiring_template = (f"""
                    <Wiring>
-                       <Start DeviceType="{identify_device_type(START_DEVICE)}" StartDevice="{START_DEVICE}" ItfNames="{START_DEVICE_INTERFACE}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
-                       <End DeviceType="{identify_device_type(END_DEVICE)}" EndDevice="{END_DEVICE}" ItfNames="{END_DEVICE_INTERFACE}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
+                       <Start DeviceType="{identify_device_type(START_DEVICE)}" StartDevice="{START_DEVICE}" ItfNames="{START_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
+                       <End DeviceType="{identify_device_type(END_DEVICE)}" EndDevice="{END_DEVICE}" ItfNames="{END_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
                        <LinkCount="1" LinkState="Production" />
                    </Wiring>""")
         return wiring_template
 
     elif items == 6:
-        START_DEVICE, START_DEVICE_INTERFACE, END_DEVICE, END_DEVICE_INTERFACE, CONNECTOR_TYPE, SRLG_ID = content
+        START_DEVICE, START_PORT, END_DEVICE, END_PORT, CONNECTOR_TYPE, SRLG_ID = content
 
         # Provides with a Single wiring template per link
         wiring_template = (f"""
                    <Wiring>
-                       <Start DeviceType="{identify_device_type(START_DEVICE)}" StartDevice="{START_DEVICE}" ItfNames="{START_DEVICE_INTERFACE}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
-                       <End DeviceType="{identify_device_type(END_DEVICE)}" EndDevice="{END_DEVICE}" ItfNames="{END_DEVICE_INTERFACE}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
+                       <Start DeviceType="{identify_device_type(START_DEVICE)}" StartDevice="{START_DEVICE}" ItfNames="{START_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
+                       <End DeviceType="{identify_device_type(END_DEVICE)}" EndDevice="{END_DEVICE}" ItfNames="{END_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
                        <LinkCount="1" LinkState="Production" SrlgId="{SRLG_ID}" />
                    </Wiring>""")
         return wiring_template
 
     elif items == 10:
-        START_DEVICE, START_DEVICE_INTERFACE, END_DEVICE, END_DEVICE_INTERFACE, CONNECTOR_TYPE, SRLG_ID, START_IPV4, START_IPV46, END_IPV4, END_IPV6 = content
+        START_DEVICE, START_PORT, END_DEVICE, END_PORT, CONNECTOR_TYPE, SRLG_ID, START_IPV4, START_IPV46, END_IPV4, END_IPV6 = content
 
         # Provides with a Single wiring template per link
         wiring_template = (f"""
                    <Wiring>
-                       <Start DeviceType="{identify_device_type(START_DEVICE)}" StartDevice="{START_DEVICE}" ItfNames="{START_DEVICE_INTERFACE}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
-                       <End DeviceType="{identify_device_type(END_DEVICE)}" EndDevice="{END_DEVICE}" ItfNames="{END_DEVICE_INTERFACE}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
+                       <Start DeviceType="{identify_device_type(START_DEVICE)}" StartDevice="{START_DEVICE}" ItfNames="{START_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
+                       <End DeviceType="{identify_device_type(END_DEVICE)}" EndDevice="{END_DEVICE}" ItfNames="{END_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
                        <LinkCount="1" LinkState="Production" SrlgId="{SRLG_ID}" />
                    </Wiring>""")
         return wiring_template

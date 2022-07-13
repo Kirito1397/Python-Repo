@@ -8,8 +8,7 @@ import os, sys
 import sys
 sys.path.append("C:/Users/Kirito/Desktop/Programming Codes/Code Repo/Python Repo/Projects/Website_Connectivity_Checker Project/website_connectivity_checker")
 
-from pip import main
-from __main__ import main
+from website_connectivity_checker import __main__
 
 class test_main(unittest.TestCase):
 
@@ -17,7 +16,9 @@ class test_main(unittest.TestCase):
         assert sum([1, 2, 3]) == 6, "Should be 6"
 
     def test_main(self):
-        self.assertTrue
+        self.main()
+        
+        self.assertTrue()
 
 
 if __name__ == "__main__":

@@ -18,7 +18,7 @@ class LinkedList:
 
 	# This function prints contents of linked list
 	# starting from head
-	def printList(self):
+	def print_list(self):
 		temp = self.head
 		while (temp):
 			print (temp.data)
@@ -38,4 +38,4 @@ if __name__=='__main__':
 	llist.head.next = second; # Link first node with second
 	second.next = third; # Link second node with the third node
 
-	llist.printList()
+	llist.print_list()
