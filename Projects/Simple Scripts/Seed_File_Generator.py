@@ -68,36 +68,75 @@ def seed_generation(option):
             # Provides with a Single wiring template per link
             wiring_template = (f"""
                     <Wiring>
-                        <Start DeviceType="{identify_device_type(START_DEVICE)}" StartDevice="{START_DEVICE}" ItfNames="{START_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
-                        <End DeviceType="{identify_device_type(END_DEVICE)}" EndDevice="{END_DEVICE}" ItfNames="{END_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
+                        <Start DeviceType="{identify_device_type(START_DEVICE)}" DeviceRegex="{START_DEVICE}" ItfNames="{START_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
+                        <End DeviceType="{identify_device_type(END_DEVICE)}" DeviceRegex="{END_DEVICE}" ItfNames="{END_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
                         <LinkCount="1" LinkState="Migration" />
                     </Wiring>""")
             return wiring_template
 
         elif items == 6:
-            START_DEVICE, START_PORT, END_DEVICE, END_PORT, CONNECTOR_TYPE, SRLG_ID = content
+            START_DEVICE, START_PORT, END_DEVICE, END_PORT, SRLG_ID, CONNECTOR_TYPE = content
 
             # Provides with a Single wiring template per link
             wiring_template = (f"""
                     <Wiring>
-                        <Start DeviceType="{identify_device_type(START_DEVICE)}" StartDevice="{START_DEVICE}" ItfNames="{START_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
-                        <End DeviceType="{identify_device_type(END_DEVICE)}" EndDevice="{END_DEVICE}" ItfNames="{END_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
+                        <Start DeviceType="{identify_device_type(START_DEVICE)}" DeviceRegex="{START_DEVICE}" ItfNames="{START_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
+                        <End DeviceType="{identify_device_type(END_DEVICE)}" DeviceRegex="{END_DEVICE}" ItfNames="{END_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
                         <LinkCount="1" LinkState="Migration" SrlgId="{SRLG_ID}" />
                     </Wiring>""")
             return wiring_template
 
         elif items == 10:
-            START_DEVICE, START_PORT, END_DEVICE, END_PORT, PORT_CHANNEL, SRLG_ID, START_IPV4, START_IPV6, END_IPV4, END_IPV6, SOLUTION_ID, CHANNEL, CDBID, CONNECTOR_TYPE = content
+            START_DEVICE, START_PORT, END_DEVICE, END_PORT, SRLG_ID, START_IPV4, START_IPV6, END_IPV4, END_IPV6, CONNECTOR_TYPE = content
 
             # Provides with a Single wiring template per link
             wiring_template = (f"""
                     <Wiring>
-                        <Start DeviceType="{identify_device_type(START_DEVICE)}" StartDevice="{START_DEVICE}" ItfNames="{START_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
-                        <End DeviceType="{identify_device_type(END_DEVICE)}" EndDevice="{END_DEVICE}" ItfNames="{END_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" />
+                        <Start DeviceType="{identify_device_type(START_DEVICE)}" DeviceRegex="{START_DEVICE}" ItfNames="{START_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" IPv4="{START_IPV4}" IPv6="{START_IPV6}"/>
+                        <End DeviceType="{identify_device_type(END_DEVICE)}" DeviceRegex="{END_DEVICE}" ItfNames="{END_PORT}" ConnectorType="{CONNECTOR_TYPE}" NewPortChannel="True" IPv4="{END_IPV4}" IPv6="{END_IPV6}"/>
                         <LinkCount="1" LinkState="Migration" SrlgId="{SRLG_ID}" />
                     </Wiring>""")
             return wiring_template
+        
+        elif items == 11:
+            START_DEVICE, START_PORT, END_DEVICE, END_PORT, PORT_CHANNEL, START_IPV4, START_IPV6, END_IPV4, END_IPV6, CDBID, CONNECTOR_TYPE  = content
 
+            # Provides with a Single wiring template per link
+            wiring_template = (f"""
+                    <Wiring>
+                        <Start DeviceType="{identify_device_type(START_DEVICE)}" DeviceRegex="{START_DEVICE}" ItfNames="{START_PORT}" ConnectorType="{CONNECTOR_TYPE}" PortChannel="{PORT_CHANNEL}" IPv4="{START_IPV4}" IPv6="{START_IPV6}" />
+                        <End DeviceType="{identify_device_type(END_DEVICE)}" DeviceRegex="{END_DEVICE}" ItfNames="{END_PORT}" ConnectorType="{CONNECTOR_TYPE}" PortChannel="{PORT_CHANNEL}" IPv4="{END_IPV4}" IPv6="{END_IPV6}" />
+                        <LinkCount="1" LinkState="Migration" />
+                        <Property Name="CDBID">{CDBID}</Property>
+                    </Wiring>""")
+            return wiring_template
+
+        elif items == 13:
+            START_DEVICE, START_PORT, END_DEVICE, END_PORT, PORT_CHANNEL, SRLG_ID, START_IPV4, START_IPV6, END_IPV4, END_IPV6, SOLUTION_ID, CHANNEL_NUM, CONNECTOR_TYPE = content
+
+            # Provides with a Single wiring template per link
+            wiring_template = (f"""
+                    <Wiring>
+                        <Start DeviceType="{identify_device_type(START_DEVICE)}" DeviceRegex="{START_DEVICE}" ItfNames="{START_PORT}" ConnectorType="{CONNECTOR_TYPE}" PortChannel="{PORT_CHANNEL}" IPv4="{START_IPV4}" IPv6="{START_IPV6}" />
+                        <End DeviceType="{identify_device_type(END_DEVICE)}" DeviceRegex="{END_DEVICE}" ItfNames="{END_PORT}" ConnectorType="{CONNECTOR_TYPE}" PortChannel="{PORT_CHANNEL}" IPv4="{END_IPV4}" IPv6="{END_IPV6}" />
+                        <LinkCount="1" LinkState="Migration" SrlgId="{SRLG_ID}" AppendOpticalOverlay="true" SolutionId="{SOLUTION_ID}" Channel="{CHANNEL_NUM}" OpticalChannelType="Line" />
+                    </Wiring>""")
+            return wiring_template
+
+        elif items == 14:
+            START_DEVICE, START_PORT, END_DEVICE, END_PORT, PORT_CHANNEL, SRLG_ID, START_IPV4, START_IPV6, END_IPV4, END_IPV6, SOLUTION_ID, CHANNEL_NUM , CDBID, CONNECTOR_TYPE = content
+
+            # Provides with a Single wiring template per link
+            wiring_template = (f"""
+                    <Wiring>
+                        <Start DeviceType="{identify_device_type(START_DEVICE)}" DeviceRegex="{START_DEVICE}" ItfNames="{START_PORT}" ConnectorType="{CONNECTOR_TYPE}" PortChannel="{PORT_CHANNEL}" IPv4="{START_IPV4}" IPv6="{START_IPV6}" />
+                        <End DeviceType="{identify_device_type(END_DEVICE)}" DeviceRegex="{END_DEVICE}" ItfNames="{END_PORT}" ConnectorType="{CONNECTOR_TYPE}" PortChannel="{PORT_CHANNEL}" IPv4="{END_IPV4}" IPv6="{END_IPV6}" />
+                        <LinkCount="1" LinkState="Migration" SrlgId="{SRLG_ID}" AppendOpticalOverlay="true" SolutionId="{SOLUTION_ID}" Channel="{CHANNEL_NUM}" OpticalChannelType="Line" />
+                        <Property Name="CDBID">{CDBID}</Property>
+                    </Wiring>""")
+            return wiring_template
+        else:
+            return f'\nProvide Current number of fields. One of the field is missing.'
     if option == 1:
         process_link(link_input(), refresh_ndt)
     else:
