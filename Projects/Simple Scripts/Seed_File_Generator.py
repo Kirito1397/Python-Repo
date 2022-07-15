@@ -6,14 +6,12 @@ def user_prompt():
 
     print("""Kindly select the desired option from below:\n\t1. New Build NDT\n\t2. Migration NDT\n\t3. Re-IP NDT\n""")
     main_menu_response = int(input())
-    if main_menu_response == 1:
+    if main_menu_response != 2:
         return ("\t\tThe Feature is not yet ready!\t\t")
-    elif main_menu_response == 3:
-        return seed_generation(3)
     else:
-        print("""Kindly confirm the type of Migration NDT from below options:\n\t1. Refresh\n\t2. Link Migration""")
+        print("""\nKindly confirm the type of Migration NDT from below options:\n\t1. Refresh\n\t2. Link Migration""")
         migration_menu_response = int(input())
-        return seed_generation(migration_menu_response)
+        return seed_generation('2.' + str(migration_menu_response))
 
 
 def identify_device_type(device):
@@ -53,7 +51,7 @@ def link_input():
 
 def seed_generation(option):
 
-    def process_link(arr, func):
+    def process_links(arr, func):
         seed_file = "<Seed>"
 
         # Run Loop to create and join wriring templates
@@ -88,14 +86,29 @@ def seed_generation(option):
                     </Wiring>""")
             return wiring_template
 
-    if option == 1:
-        print("Provide links as input in below format:\n\n\tSTART_DEVICE, START_PORT, END_DEVICE, END_PORT, PORT_CHANNEL, SRLG_ID, START_IPV4, START_IPV6, END_IPV4, END_IPV6, SOLUTION_ID, CHANNEL_NUM, CONNECTOR_TYPE\n")
-        process_link(link_input(), refresh_ndt)
+    if option == '2.1':
+        print("\nProvide links as input in below format:\n\n\tSTART_DEVICE, START_PORT, END_DEVICE, END_PORT, PORT_CHANNEL, SRLG_ID, START_IPV4, START_IPV6, END_IPV4, END_IPV6, SOLUTION_ID, CHANNEL_NUM, CONNECTOR_TYPE\n")
+        process_links(link_input(), refresh_ndt)
     elif option == 1:
-        print("Provide links as input in below format:\n\n\tSTART_DEVICE, START_PORT, END_DEVICE, END_PORT, PORT_CHANNEL, SRLG_ID, START_IPV4, START_IPV6, END_IPV4, END_IPV6, SOLUTION_ID, CHANNEL_NUM, CDBID, CONNECTOR_TYPE\n")
-        process_link(link_input(), re_ip)
+        print("\nProvide links as input in below format:\n\n\tSTART_DEVICE, START_PORT, END_DEVICE, END_PORT, PORT_CHANNEL, SRLG_ID, START_IPV4, START_IPV6, END_IPV4, END_IPV6, SOLUTION_ID, CHANNEL_NUM, CDBID, CONNECTOR_TYPE\n")
+        process_links(link_input(), re_ip)
     else:
         return 'Feature not Ready!'
+
+def save_file(data):
+    '''Function to save the Seed contents/data'''
+    
+    #Removes the root tkinter window from the screen (without destroying it)
+    root = tk.Tk()   #Create Tkinter Top Window
+    root.withdraw()  #Hide Tkinter Top Window
+
+    file_path = filedialog.asksaveasfile(confirmoverwrite=True, initialfile = 'myseed.xml',defaultextension=".xml",filetypes=[("All Files","*.*"),("XML Documents","*.xml")])
+
+    with open(file_path.name,'w') as f:
+        f.writelines(data+ '\n</Seed>')
+        f.close()
+    return 'File Saved!'
+
 
 
 if __name__ == "__main__":
