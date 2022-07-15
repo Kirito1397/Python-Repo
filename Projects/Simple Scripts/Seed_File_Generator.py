@@ -1,17 +1,22 @@
 import re
+import os
 import tkinter as tk
 from tkinter import filedialog
 
+def clear_screen():
+    '''Function to apply clear screen command on the Terminal/cli'''
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def user_prompt():
     '''Function to process user choices in Menu'''
-
+    clear_screen()
     print("""Kindly select the desired option from below:\n\t1. New Build NDT\n\t2. Migration NDT\n\t3. Re-IP NDT\n""")
     main_menu_response = int(input())
     if main_menu_response != 2:
         return ("\t\tThe Feature is not yet ready!\t\t")
     else:
-        print("""\nKindly confirm the type of Migration NDT from below options:\n\t1. Refresh\n\t2. Link Migration""")
+        clear_screen()
+        print("""\nKindly confirm the type of Migration NDT from below options:\n\t1. Refresh\n\t2. Link Migration\n""")
         migration_menu_response = int(input())
         return seed_generation('2.' + str(migration_menu_response))
 
@@ -53,6 +58,8 @@ def link_input():
 
 def seed_generation(option):
 
+    clear_screen()
+
     def process_links(arr, func):
         seed_file = "<Seed>"
 
@@ -88,14 +95,15 @@ def seed_generation(option):
                     </Wiring>""")
             return wiring_template
 
+    # Making Decision based on User Input
     if option == '2.1':
         print("\nProvide links as input in below format:\n\n\tSTART_DEVICE, START_PORT, END_DEVICE, END_PORT, PORT_CHANNEL, SRLG_ID, START_IPV4, START_IPV6, END_IPV4, END_IPV6, SOLUTION_ID, CHANNEL_NUM, CONNECTOR_TYPE\n")
         process_links(link_input(), refresh_ndt)
-    elif option == 1:
+    elif option == '1.3':
         print("\nProvide links as input in below format:\n\n\tSTART_DEVICE, START_PORT, END_DEVICE, END_PORT, PORT_CHANNEL, SRLG_ID, START_IPV4, START_IPV6, END_IPV4, END_IPV6, SOLUTION_ID, CHANNEL_NUM, CDBID, CONNECTOR_TYPE\n")
         process_links(link_input(), re_ip)
     else:
-        return 'Feature not Ready!'
+        print('\nFeature not Ready!')
 
 def save_file(data):
     '''Function to save the Seed contents/data'''
