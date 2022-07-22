@@ -16,7 +16,7 @@ def user_prompt():
         return ("\t\tThe Feature is not yet ready!\t\t")
     else:
         clear_screen()
-        print("""\nKindly confirm the type of Migration NDT from below options:\n\t1. Refresh\n\t2. Link Migration\n""")
+        print("""\nKindly confirm the type of Migration NDT from below options:\n\t1. Refresh\n\t2. Refresh(with IP)\n\t3. Link Migration\n""")
         migration_menu_response = int(input())
         return seed_generation('2.' + str(migration_menu_response))
 
@@ -72,6 +72,38 @@ def seed_generation(option):
     def refresh_ndt(content):
         items = len(content)
 
+        if items == 6:
+            # Gets the number of items provided as input per link
+            START_DEVICE, START_PORT, END_DEVICE, END_PORT, PORT_CHANNEL, CONNECTOR_TYPE = content
+
+            # Provides with a Single wiring template per link
+            wiring_template = (f"""
+                    <Wiring>
+                        <Start DeviceType="{identify_device_type(START_DEVICE)}" DeviceRegex="^{START_DEVICE}$" Scope="Datacenter" ItfNames="{START_PORT}" ConnectorType="{CONNECTOR_TYPE}" PortChannel="{PORT_CHANNEL}" />
+                        <End DeviceType="{identify_device_type(END_DEVICE)}" DeviceRegex="^{END_DEVICE}$" Scope="Datacenter" ItfNames="{END_PORT}" ConnectorType="{CONNECTOR_TYPE}" PortChannel="{PORT_CHANNEL}" />
+                        <LinkCount="1" LinkState="Migration" LinkCountScope="Local" />
+                    </Wiring>""")
+            return wiring_template
+
+        elif items == 7:
+            # Gets the number of items provided as input per link
+            START_DEVICE, START_PORT, END_DEVICE, END_PORT, PORT_CHANNEL, SRLG_ID, CONNECTOR_TYPE = content
+
+            # Provides with a Single wiring template per link
+            wiring_template = (f"""
+                    <Wiring>
+                        <Start DeviceType="{identify_device_type(START_DEVICE)}" DeviceRegex="^{START_DEVICE}$" Scope="Datacenter" ItfNames="{START_PORT}" ConnectorType="{CONNECTOR_TYPE}" PortChannel="{PORT_CHANNEL}" />
+                        <End DeviceType="{identify_device_type(END_DEVICE)}" DeviceRegex="^{END_DEVICE}$" Scope="Datacenter" ItfNames="{END_PORT}" ConnectorType="{CONNECTOR_TYPE}" PortChannel="{PORT_CHANNEL}" />
+                        <LinkCount="1" LinkState="Migration" LinkCountScope="Local" SrlgId="{SRLG_ID}" AppendOpticalOverlay="true" ReuseProductionLinkOpticalOverlay="true" />
+                    </Wiring>""")
+            return wiring_template
+        else:
+            return 'One or more field is missing!'
+
+
+    def refresh_ndt_with_ip(content):
+        items = len(content)
+
         if items == 10:
             # Gets the number of items provided as input per link
             START_DEVICE, START_PORT, END_DEVICE, END_PORT, PORT_CHANNEL, START_IPV4, START_IPV6, END_IPV4, END_IPV6, CONNECTOR_TYPE = content
@@ -94,7 +126,7 @@ def seed_generation(option):
                     <Wiring>
                         <Start DeviceType="{identify_device_type(START_DEVICE)}" DeviceRegex="^{START_DEVICE}$" Scope="Datacenter" ItfNames="{START_PORT}" ConnectorType="{CONNECTOR_TYPE}" PortChannel="{PORT_CHANNEL}" IPv4="{START_IPV4}/31" IPv6="{START_IPV6}/126" />
                         <End DeviceType="{identify_device_type(END_DEVICE)}" DeviceRegex="^{END_DEVICE}$" Scope="Datacenter" ItfNames="{END_PORT}" ConnectorType="{CONNECTOR_TYPE}" PortChannel="{PORT_CHANNEL}" IPv4="{END_IPV4}/31" IPv6="{END_IPV6}/126" />
-                        <LinkCount="1" LinkState="Migration" LinkCountScope="Local" SrlgId="{SRLG_ID}" AppendOpticalOverlay="true" RefreshOpticalOverlay="True" />
+                        <LinkCount="1" LinkState="Migration" LinkCountScope="Local" SrlgId="{SRLG_ID}" AppendOpticalOverlay="true" ReuseProductionLinkOpticalOverlay="true" />
                     </Wiring>""")
             return wiring_template
         else:
@@ -132,7 +164,7 @@ def save_file(data):
     root = tk.Tk()   #Create Tkinter Top Window
     root.withdraw()  #Hide Tkinter Top Window
 
-    file_path = filedialog.asksaveasfile(confirmoverwrite=True, initialfile = 'myseed.xml',defaultextension=".xml",filetypes=[("All Files","*.*"),("XML Documents","*.xml")])
+    file_path = filedialog.asksaveasfile(confirmoverwrite=true, initialfile = 'myseed.xml',defaultextension=".xml",filetypes=[("All Files","*.*"),("XML Documents","*.xml")])
 
     with open(file_path.name,'w') as f:
         f.writelines(data+ '\n</Seed>')
